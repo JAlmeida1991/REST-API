@@ -8,6 +8,27 @@
   </head>
   <body>
     <h1>REST API</h1>
-    <p><%= date %></p>
+    <div id="root"></div>
   </body>
+  <script>
+    const rootEl = document.getElementById("root");
+
+    fetch("/api")
+      .then(r => r.json())
+      .then(data => {
+        for (val of data) {
+          const containerEl = document.createElement("div");
+          const titleEl = document.createElement("h3");
+          const bodyEl = document.createElement("p");
+          const { title, body } = val;
+
+          titleEl.innerText = title;
+          bodyEl.innerText = body;
+          containerEl.appendChild(titleEl);
+          containerEl.appendChild(bodyEl);
+          rootEl.appendChild(containerEl);
+        }
+      })
+      .catch(err => console.log(err));
+  </script>
 </html>
